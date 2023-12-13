@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Text to Image API Test</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+  <!-- <h1>Text to Image API Test</h1> -->
+
+  <label for="positivePrompt">Positive Prompt:</label>
+  <input type="text" id="positivePrompt"><br><br>
+
+  <label for="negativePrompt">Negative Prompt:</label>
+  <input type="text" id="negativePrompt"><br><br>
+
+  <label for="sampler">Sampler:</label>
+  <select id="sampler">
+    <option value="unipc" selected>unipc</option>
+    <!-- Add other options here -->
+  </select><br><br>
+
+  <label for="samplingSteps">Sampling Steps:</label>
+  <input type="text" id="samplingSteps" value="20"><br><br>
+
+  <button id="generateBtn">Generate</button><br><br>
+
+  <img id="generatedImage" src="" alt="Generated Image" style="display:none;">
+
+  <script>
+    $('#generateBtn').click(function() {
+      // Get user input
+      const positivePrompt = $('#positivePrompt').val();
+      const negativePrompt = $('#negativePrompt').val();
+      const sampler = $('#sampler').val();
+      const samplingSteps = $('#samplingSteps').val();
+
+      // Prepare the payload
+      const payload = {
+        prompt: positivePrompt + ' ' + negativePrompt,
+        steps: parseInt(samplingSteps)
+      };
+
+      // Make API call
+      $.ajax({
+        // url: 'http://127.0.0.1:7860/sdapi/v1/txt2img',
+        // url: 'http://127.0.0.1:7860',
+        url: 'http://127.0.0.1:5001/generate',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(payload),
+        success: function(response) {
+          // Display the generated image
+          $('#generatedImage').attr('src', 'data:image/png;base64,' + response.images[0]);
+          $('#generatedImage').show();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+        alert('Error generating image: ' + jqXHR.responseText);
+        }
+
+
+
+      });
+    });
+  </script>
+
+</body>
+</html>

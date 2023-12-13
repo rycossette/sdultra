@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text to Image</title>
+</head>
+<body>
+
+<h1>Text to Image Inference</h1>
+
+<form method="post">
+    <!-- Dropdown for diffusers models -->
+    <select name="model">
+        {% for model in models %}
+            <option value="{{ model }}">{{ model }}</option>
+        {% endfor %}
+    </select><br>
+
+    <!-- Textbox for positive prompt -->
+    <input type="text" name="positive_prompt" placeholder="Positive Prompt"><br>
+
+    <!-- Textbox for negative prompt -->
+    <input type="text" name="negative_prompt" placeholder="Negative Prompt"><br>
+
+    <!-- Dropdown for sampler -->
+    <select name="sampler">
+        <option value="unipc" selected>unipc</option>
+        <!-- Add other options here -->
+    </select><br>
+
+    <!-- Textbox for sample amount -->
+    <input type="text" name="sample_amount" value="20"><br>
+
+    <!-- Textboxes for resolution -->
+    <input type="text" name="height" value="1024">
+    <input type="text" name="width" value="1024"><br>
+
+    <!-- Generate button -->
+    <input type="submit" value="Generate">
+</form>
+
+<!-- Space for generated image -->
+<div id="image_space">
+    <!-- Image will be displayed here -->
+</div>
+
+</body>
+</html>
